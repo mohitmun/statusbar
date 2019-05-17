@@ -1,0 +1,41 @@
+#!/bin/bash
+
+__status_bar_on() {
+  #echo '>>> STAUS BAR ON <<<'
+  local cols=$(tput cols)
+  local col=0
+  local rows="$(tput lines)"
+  local lrow=$(expr $rows - 1)
+
+
+  # reserve space of the status-bar at the bottem of the screen
+  tput sc
+  tput csr 0 $(expr $rows - 2)
+
+  # write out the status-bar
+  tput civis
+  #tput cup $lrow $col
+  #printf %*s $cols
+  tput cup $lrow $col
+  printf "$(date) | $PWD"
+  tput cnorm
+  tput rc
+}
+
+__status_bar_off() {
+  #echo '>>> STAUS BAR OFF <<<'
+  tput sc
+  tput ed
+  tput csr 0 "$(tput lines)"
+  tput rc
+}
+
+
+#__status_bar_resize() {
+  ## resize the window
+  #tput csr 0 $(expr $(tput lines) - 2)
+#}
+
+#__status_bar_resize
+
+__status_bar_on
